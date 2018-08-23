@@ -1,7 +1,7 @@
 {
-  "name": "eth2air",
+  "name": "eth2air-core",
   "version": "1.0.0",
-  "description": "Service for airdropping tokens via links",
+  "description": "Core Javascript Eth2Air library",
   "main": "lib/eth2air.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/eth2/eth2air.git"
+    "url": "https://github.com/Eth2io/eth2air-core.git"
   },
   "keywords": [
     "javascript",
@@ -22,9 +22,9 @@
   ],
   "license": "GPL",
   "bugs": {
-    "url": "https://github.com/eth2/eth2air/issues"
+    "url": "https://github.com/Eth2io/eth2air-core/issues"
   },
-  "homepage": "https://github.com/eth2/eth2air",
+  "homepage": "https://github.com/Eth2io/eth2air-core",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
