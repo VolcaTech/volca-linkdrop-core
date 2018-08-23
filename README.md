@@ -51,3 +51,45 @@ eth2air.claimTokens({
 	  const { txHash } = result;
   })
   ```
+### Deploy Airdrop Contract and Generate Claim Links
+```js
+
+async _deployAirdrop() {
+  	// 1. Deploy Smart Contract
+    // generate airdropTransit key pair for signing links and deploy airdrop contract
+    let contractAddress = null;
+	  const {
+	    	txHash, 
+		    airdropTransitPK,
+		    airdropTransitAddress
+	   } = await eth2air.deployContract({
+		      claimAmount, //  claim amount of token (e.g. 24.56)
+		      tokenAddress, 
+		      decimals, // token decimals
+		      claimAmountEth, claim amount of ETH (e.g. 0.001)
+		      linksNumber, // number of links to generate
+		      web3, // web3 object
+		      onTxMined: (airdropContractAddress) => {
+	              // callback to update airdropContractAddress, when mined 
+                contractAddress = airdropContractAddress;
+            };
+	    });
+      
+      // Wait until contract is deployed...
+      
+      // 2. Approve Smart Contract for Token Withdrawal
+	    eth2air.approveContract({
+    		tokenAddress,
+		    contractAddress,
+    		amount: 10e30, //  amount to approve
+		    web3 // web3 object
+	    });
+      
+	    // 3. Generate Claim Links 
+     	const links = eth2air.generateLinks({
+	       linksNumber, // number of links to generate
+	       airdropTransitPK, // airdrop transit private key 
+	       contractAddress
+	    });
+}    
+```
