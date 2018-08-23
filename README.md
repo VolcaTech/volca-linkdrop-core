@@ -41,7 +41,7 @@ eth2air.claimTokens({
 	    keyR,  // signature param (r) from the claim URL
 	    keyS,  // signature param (s) from the claim URL
 	    keyV,  // signature param (v) from the claim URL
-	    networkId // id of the connected Network (Mainnet - 1, Ropsten - 3) 
+	    networkId // id of the connected Network (Mainnet - '1', Ropsten - '3') 
 	}).then((result) => { 
       if (!result.success) {
 	      throw new Error(result.errorMessage || "Server error");
