@@ -1,63 +1,53 @@
-# WalletConnect
+# Eth2Airdrop Core Javascript Library
 
-Library to connect Dapps to mobile wallets using WalletConnect
+Library for deploying and interacting with Eth2Airdrop Contract and Server APIs.  
+Used at Eth2Airdrop-app - https://github.com/Eth2io/eth2airdrop-app.git  
 
-You can read more about WalletConnect standard here: http://walletconnect.org/
-
-### Install package
-
+## Installation
 ```bash
-yarn add walletconnect
-
-# OR
-
-npm install --save walletconnect
+npm i --save https://github.com/Eth2io/eth2airdrop-core.git
 ```
+## Usage
 
-### Getting Started
-
+### Get Airdrop Details from the Airdrop Smart Contract
 ```js
-import WalletConnect from 'walletconnect'
+// import library
+import eth2air from 'eth2air-core';
 
-/**
- *  Create a webConnector
- */
-const webConnector = new WalletConnect(
-  {
-    bridgeUrl: 'https://bridge.walletconnect.org',  // Required
-    dappName: 'INSERT_DAPP_NAME',                   // Required
-    canvasElement: 'INSERT_QRCODE_CANVAS_ELEMENT',  // Optional
-  }
-)
 
-/**
- *  Create a new session
- */
-const session = await webConnector.initSession()
-
-console.log(session) // prints { sessionId, sharedKey, qrcode }
-
-/**
- *  Listen to session status
- */
-webConnector.listenSessionStatus((err, result) => {
-  console.log(result) // check result
-})
-
-/**
- *  Draft transaction
- */
-const tx = {from: '0xab12...1cd', to: '0x0', nonce: 1, gas: 100000, value: 0, data: '0x0'}
-
-/**
- *  Create transaction
- */
-const transactionId = await webConnector.createTransaction(tx)
-
-/**
- *  Listen to transaction status
- */
-webConnector.listenTransactionStatus(transactionId, (err, result) => {
-  console.log(result) // check result
+eth2air.getAirdropParams({
+		contractAddress: contractAddress, // airdrop contract address from the claim URL
+		transitPK: transitPK, // transit private key from the claim URL
+		web3: web3 // web3 object (see web3js)
+}).then({
+		tokenSymbol, 
+		claimAmount, // in atomic values
+		tokenAddress, 
+		linkClaimed // if the link was already used
+	    } => { 
+      // ....
 })
 ```
+
+
+### Claim link
+```js
+import eth2air from 'eth2air-core';
+
+eth2air.claimTokens({
+	    receiverAddress, // address to receive tokens to
+	    contractAddress, // address of the airdrop contract from he
+	    transitPK,  // transit private key from the claim URL
+	    keyR,  // signature param (r) from the claim URL
+	    keyS,  // signature param (s) from the claim URL
+	    keyV,  // signature param (v) from the claim URL
+	    networkId // id of the connected Network (Mainnet - '1', Ropsten - '3') 
+	}).then((result) => { 
+      if (!result.success) {
+	      throw new Error(result.errorMessage || "Server error");
+	    }
+     
+	  // Server returns Hash of the transaction submitted by the Server to the Airdrop Contract
+	  const { txHash } = result;
+  })
+  ```
