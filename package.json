@@ -1,0 +1,67 @@
+{
+  "name": "eth2air",
+  "version": "1.0.0",
+  "description": "Service for airdropping tokens via links",
+  "main": "lib/eth2air.js",
+  "scripts": {
+    "build": "webpack --env dev && webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev",
+    "test": "mocha --require babel-core/register --require idempotent-babel-polyfill --colors ./test/*.spec.js",
+    "test:watch": "mocha --require babel-core/register --require idempotent-babel-polyfill --colors -w ./test/*.spec.js",
+    "lint": "eslint src/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eth2/eth2air.git"
+  },
+  "keywords": [
+    "javascript",
+    "ethereum",
+    "dapp",
+    "web"
+  ],
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/eth2/eth2air/issues"
+  },
+  "homepage": "https://github.com/eth2/eth2air",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.1.5",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "chai": "^4.1.2",
+    "eslint": "^4.13.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-loader": "^1.9.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "^4.0.1",
+    "node-fetch": "^2.1.2",
+    "webpack": "^3.10.0",
+    "yargs": "^10.0.3"
+  },
+  "dependencies": {
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "bluebird": "^3.5.1",
+    "ethereumjs-tx": "^1.3.3",
+    "ethereumjs-util": "^5.1.2",
+    "ethereumjs-wallet": "^0.6.0",
+    "human-standard-token-abi": "^1.0.2",
+    "idempotent-babel-polyfill": "^0.1.1",
+    "querystring": "^0.2.0",
+    "solidity-sha3": "^0.4.1",
+    "uuid": "^3.2.1",
+    "web-utils": "^1.0.0",
+    "web3": "^0.20.1",
+    "web3-utils": "^1.0.0-beta.35"
+  }
+}
