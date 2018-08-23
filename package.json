@@ -2,7 +2,7 @@
   "name": "eth2air-core",
   "version": "1.0.0",
   "description": "Core Javascript Eth2Air library",
-  "main": "lib/eth2air.js",
+  "main": "lib/eth2air-core.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
