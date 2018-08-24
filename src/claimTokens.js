@@ -33,19 +33,19 @@ const _callServerToClaimTokens = (claimParams, networkId) => {
     const serverUrl = _getApiHost(networkId);
     
     return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
-            method: 'POST', 
-            headers: {
-		'Accept': 'application/json',
-      		'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(claimParams)	
-	}).then((response)  => response.json());
+        method: 'POST', 
+        headers: {
+	    'Accept': 'application/json',
+      	    'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(claimParams)	
+    }).then((response)  => response.json());
 };
 
 
 /**
  * @desc Sign receiver Ethereum address with the Transit Private key from URL params and 
-call server to claim tokens. 
+ call server to claim tokens. 
  * @param  {String}  [receiverAddress] - Ethereum address to withdraw tokens to
  * @param  {String}  [contractAddress] - Airdrop Contract address
  * @param  {String}  [transitPK] - Transit Private key from the URL params
