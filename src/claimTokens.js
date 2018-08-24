@@ -14,7 +14,7 @@ const _getApiHost = (networkId) => {
 	break;
     case '3':
 	serverUrl = 'https://ropsten-air.eth2phone.com';
-	break;	    
+	break;     
     default:
 	throw new Error("Unknown network!");
 	serverUrl = null;
@@ -36,9 +36,9 @@ const _callServerToClaimTokens = (claimParams, networkId) => {
         method: 'POST', 
         headers: {
 	    'Accept': 'application/json',
-      	    'Content-Type': 'application/json'
+            'Content-Type': 'application/json'
         },
-        body: JSON.stringify(claimParams)	
+        body: JSON.stringify(claimParams) 
     }).then((response)  => response.json());
 };
 

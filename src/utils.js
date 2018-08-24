@@ -61,7 +61,7 @@ const _signWithPK = (privateKey, msg) => {
  * @return {'v': Number, 'r': String, 's': String} 
  */
 export const signAddress = ({address, privateKey}) => {
-    const verificationHash = Web3Utils.soliditySha3(SIGNATURE_PREFIX, { type: 'address', value: address });		
+    const verificationHash = Web3Utils.soliditySha3(SIGNATURE_PREFIX, { type: 'address', value: address });  
     const signature = _signWithPK(privateKey, verificationHash);
     const v = signature.v;
     const r = '0x' + signature.r.toString("hex");

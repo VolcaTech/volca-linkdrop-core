@@ -32,7 +32,7 @@ const _constructLink = ({ airdropTransitPK, contractAddress }) => {
 export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress}) => {
     let i = 0;    
     const links = [];
-    while (i < linksNumber) {	    
+    while (i < linksNumber) {     
 	const link = _constructLink({airdropTransitPK, contractAddress});
 	links.push([link]);
 	i++;

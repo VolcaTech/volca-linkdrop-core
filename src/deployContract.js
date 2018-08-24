@@ -23,25 +23,25 @@ const _sendContractDeploymentTx = ({
 	let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
 	
 	AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress, {
-    	    from: web3.eth.accounts[0],
-    	    data: BYTECODE,
+            from: web3.eth.accounts[0],
+            data: BYTECODE,
 	    value: txValue,
-    	    gas: txGas
+            gas: txGas
 	},  (err, airdropContract) => {
-    	    if(err) { reject(err); return null;}
-    	    // NOTE: The callback will fire twice!
-    	    // Once the contract has the transactionHash property set and once its deployed on an address.
+            if(err) { reject(err); return null;}
+            // NOTE: The callback will fire twice!
+            // Once the contract has the transactionHash property set and once its deployed on an address.
 	    
-    	    // e.g. check tx hash on the first call (transaction send)
-    	    if(!airdropContract.address) {
-    		resolve(airdropContract.transactionHash); // The hash of the transaction, which deploys the contract		
-    		// check address on the second call (contract deployed)
-    	    } else {
+            // e.g. check tx hash on the first call (transaction send)
+            if(!airdropContract.address) {
+		resolve(airdropContract.transactionHash); // The hash of the transaction, which deploys the contract  
+		// check address on the second call (contract deployed)
+            } else {
 		onTxMined(airdropContract.address);
 	    }
 	});
     });
-}				     
+}         
 
 
 /**
@@ -83,7 +83,7 @@ export const deployContract = async ({
 	claimAmountEthInWei,
 	airdropTransitAddress
     };
-        
+    
     // tx params
     const gasEstimate = await web3.eth.estimateGasPromise({data: BYTECODE});
     const txGas = gasEstimate + 100000;

@@ -41,6 +41,6 @@ export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => {
 	tokenSymbol,
 	claimAmount,
 	tokenAddress,
-	linkClaimed	
+	linkClaimed 
     }
 }
