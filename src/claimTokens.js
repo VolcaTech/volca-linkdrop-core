@@ -10,14 +10,14 @@ const _getApiHost = (networkId) => {
     let serverUrl;
     switch (networkId) {
     case '1':
-	serverUrl = 'https://mainnet-air.eth2phone.com';
-	break;
+        serverUrl = 'https://mainnet-air.eth2phone.com';
+        break;
     case '3':
-	serverUrl = 'https://ropsten-air.eth2phone.com';
-	break;     
+        serverUrl = 'https://ropsten-air.eth2phone.com';
+        break;     
     default:
-	throw new Error("Unknown network!");
-	serverUrl = null;
+        throw new Error("Unknown network!");
+        serverUrl = null;
     }
     return serverUrl;
 };
@@ -35,7 +35,7 @@ const _callServerToClaimTokens = (claimParams, networkId) => {
     return fetch(`${serverUrl}/api/v1/airdrops/claim-tokens`, { 
         method: 'POST', 
         headers: {
-	    'Accept': 'application/json',
+        'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(claimParams) 
@@ -69,15 +69,15 @@ export const claimTokens = ({
     const transitAddress = getAddressFromPrivateKey(transitPK);
     
     const claimParams = {
-	transitAddress,
-	receiverAddress,
-	contractAddress,
-	keyR,
-	keyS,
-	keyV,
-	receiverV,
-	receiverR,
-	receiverS,
+        transitAddress,
+        receiverAddress,
+        contractAddress,
+        keyR,
+        keyS,
+        keyV,
+        receiverV,
+        receiverR,
+        receiverS,
     };    
     
     return _callServerToClaimTokens(claimParams, networkId);

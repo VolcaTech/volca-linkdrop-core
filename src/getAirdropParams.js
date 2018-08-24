@@ -38,9 +38,9 @@ export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => {
     const linkClaimed = await contract.isLinkClaimed_Promise(transitAddress);
     
     return {
-	tokenSymbol,
-	claimAmount,
-	tokenAddress,
-	linkClaimed 
+        tokenSymbol,
+        claimAmount,
+        tokenAddress,
+        linkClaimed 
     }
 }

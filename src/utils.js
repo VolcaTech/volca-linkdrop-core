@@ -39,7 +39,7 @@ export const generateAccount = () => {
  */
 export const getAddressFromPrivateKey = (privateKey) => {
     return '0x' + Wallet.fromPrivateKey(
-	new Buffer(privateKey, 'hex')).getAddress().toString('hex');
+        new Buffer(privateKey, 'hex')).getAddress().toString('hex');
 }
 
 

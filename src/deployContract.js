@@ -19,27 +19,27 @@ const _sendContractDeploymentTx = ({
     onTxMined
 }) => {    
     return new Promise((resolve, reject) => {
-	const AirdropContract = web3.eth.contract(ABI);    
-	let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
-	
-	AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress, {
+        const AirdropContract = web3.eth.contract(ABI);    
+        let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
+        
+        AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress, {
             from: web3.eth.accounts[0],
             data: BYTECODE,
-	    value: txValue,
+            value: txValue,
             gas: txGas
-	},  (err, airdropContract) => {
+        },  (err, airdropContract) => {
             if(err) { reject(err); return null;}
             // NOTE: The callback will fire twice!
             // Once the contract has the transactionHash property set and once its deployed on an address.
-	    
+            
             // e.g. check tx hash on the first call (transaction send)
             if(!airdropContract.address) {
-		resolve(airdropContract.transactionHash); // The hash of the transaction, which deploys the contract  
-		// check address on the second call (contract deployed)
+                resolve(airdropContract.transactionHash); // The hash of the transaction, which deploys the contract  
+                // check address on the second call (contract deployed)
             } else {
-		onTxMined(airdropContract.address);
-	    }
-	});
+                onTxMined(airdropContract.address);
+            }
+        });
     });
 }         
 
@@ -78,10 +78,10 @@ export const deployContract = async ({
     const claimAmountAtomic = web3.toBigNumber(claimAmount).shift(decimals);
     const claimAmountEthInWei = web3.toBigNumber(claimAmountEth).shift(18);
     const airdropParams = {
-	tokenAddress,
-	claimAmountAtomic,
-	claimAmountEthInWei,
-	airdropTransitAddress
+        tokenAddress,
+        claimAmountAtomic,
+        claimAmountEthInWei,
+        airdropTransitAddress
     };
     
     // tx params
@@ -93,8 +93,8 @@ export const deployContract = async ({
     const txHash = await _sendContractDeploymentTx({airdropParams, txGas, txValue, web3, onTxMined});
 
     return {
-	txHash, 
-	airdropTransitPK,
-	airdropTransitAddress
+        txHash, 
+        airdropTransitPK,
+        airdropTransitAddress
     };
 }
