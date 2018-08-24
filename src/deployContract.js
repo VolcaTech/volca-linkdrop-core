@@ -1,6 +1,16 @@
 import { BYTECODE, ABI } from './metadata'; 
 import { generateAccount } from './utils';
 
+
+/**
+ * @desc Send transaction to deploy the Airdrop Smart Contract.
+ * @param  {Object}  [airdropParams] - Object wth airdrop params
+ * @param  {Number}  [txValue] - Amount of wei to send to contract
+ * @param  {Number}  [txGas] - Gas estimate for the deployment transaction
+ * @param  {Object}  [web3] - web3 object (from web3.js lib)
+ * @param  {Function}  [onTxMined] - Callback to fire after transaction is mined
+ * @return {Promise}
+ */
 const _sendContractDeploymentTx = ({
     airdropParams,
     txGas,
@@ -34,6 +44,17 @@ const _sendContractDeploymentTx = ({
 }				     
 
 
+/**
+ * @desc Send transaction to deploy the Airdrop Smart Contract.
+ * @param  {Number}  [claimAmount] - Amount of tokens to distribute on claim
+ * @param  {String}  [tokenAddress] - Token contract address
+ * @param  {Number}  [claimAmountEth] - Amount of wei to distribute on claim
+ * @param  {Number}  [decimals] - Token decimals
+ * @param  {Number}  [linksNumber] - amount of links
+ * @param  {Object}  [web3] - web3 object (from web3.js lib)
+ * @param  {Function}  [onTxMined] - Callback to fire after transaction is mined
+ * @return {Object}
+ */
 export const deployContract = async ({
     claimAmount,
     tokenAddress,
@@ -43,7 +64,6 @@ export const deployContract = async ({
     web3,
     onTxMined
 }) => {
-
 
     // Generate special key pair (Aidrop Transit Key Pair) for the airdrop.
     // (Ethereum address from the Airdrop Transit Private Key stored to the Airdrop Smart Contract as AIRDROP_TRANSIT_ADDRESS
