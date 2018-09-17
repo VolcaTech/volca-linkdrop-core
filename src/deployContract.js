@@ -20,9 +20,14 @@ const _sendContractDeploymentTx = ({
 }) => {    
     return new Promise((resolve, reject) => {
         const AirdropContract = web3.eth.contract(ABI);    
-        let { tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress } = airdropParams;
+        let {
+	    tokenAddress, claimAmountAtomic,
+	    claimAmountEthInWei, airdropTransitAddress,
+	    referralAmountAtomic
+	} = airdropParams;
         
-        AirdropContract.new(tokenAddress, claimAmountAtomic, claimAmountEthInWei, airdropTransitAddress, {
+        AirdropContract.new(tokenAddress, claimAmountAtomic, referralAmountAtomic,
+			    claimAmountEthInWei, airdropTransitAddress, {
             from: web3.eth.accounts[0],
             data: BYTECODE,
             value: txValue,
@@ -57,6 +62,7 @@ const _sendContractDeploymentTx = ({
  */
 export const deployContract = async ({
     claimAmount,
+    referralAmount=0,
     tokenAddress,
     decimals,
     claimAmountEth,
@@ -73,13 +79,17 @@ export const deployContract = async ({
     // The Airdrop Contract verifies that the private key from the link is signed by the Airdrop Transit Private Key,
     // which means that the claim link was signed by the Airdropper)
     const { privateKey: airdropTransitPK, address: airdropTransitAddress } = generateAccount();
-
+    console.log({airdropTransitPK});
+    
     // airdrop contract params
     const claimAmountAtomic = web3.toBigNumber(claimAmount).shift(decimals);
+    const referralAmountAtomic = web3.toBigNumber(referralAmount).shift(decimals);
     const claimAmountEthInWei = web3.toBigNumber(claimAmountEth).shift(18);
+
     const airdropParams = {
         tokenAddress,
         claimAmountAtomic,
+	referralAmountAtomic,
         claimAmountEthInWei,
         airdropTransitAddress
     };

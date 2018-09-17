@@ -1,4 +1,4 @@
-import { generateAccount, signAddress } from './utils';
+import { generateAccount, sign2Addresses } from './utils';
 const HOST = 'https://eth2air.io';
 
 
@@ -9,16 +9,21 @@ const HOST = 'https://eth2air.io';
  * @param  {String}  [host] - Claim Link's server host, e.g. 'https://eth2air.io'  
  * @return {String}
  */
-const _constructLink = ({ airdropTransitPK, contractAddress, host }) => {
+const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddress }) => {
 
     // generate random key pair
     const { address, privateKey } = generateAccount();
     
     // sign private key with the Airdrop Transit Private Key
-    const { v, r, s } = signAddress({address, privateKey: airdropTransitPK});
+    const { v, r, s } = sign2Addresses({address, referralAddress, privateKey: airdropTransitPK});
 
     // construct link
+    // construct link
     let link = `${host}/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${contractAddress}`;
+    if (referralAddress !== '0x0000000000000000000000000000000000000000') {
+	link = `${link}&ref=${referralAddress}`;
+    }
+    
     return link;
 }
 
@@ -31,11 +36,11 @@ const _constructLink = ({ airdropTransitPK, contractAddress, host }) => {
  * @param  {String}  [host] - Claim Link's server host, e.g. 'https://eth2air.io' 
  * @return {Array}
  */
-export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress, host=HOST}) => {
+export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress, host=HOST, referralAddress='0x0000000000000000000000000000000000000000'}) => {
     let i = 0;    
     const links = [];
     while (i < linksNumber) {     
-        const link = _constructLink({airdropTransitPK, contractAddress, host});
+        const link = _constructLink({airdropTransitPK, contractAddress, host, referralAddress});
         links.push([link]);
         i++;
     }

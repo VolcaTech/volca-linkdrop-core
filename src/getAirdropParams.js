@@ -5,11 +5,10 @@ import { ABI } from './metadata';
 /**
  * @desc Get Airdrop parameters from the Airdrop Smart Contract
  * @param  {String}  [contractAddress] - Airdrop Contract address
- * @param  {String}  [transitPK] - Transit Private key from the URL params
  * @param  {Object}  [web3] - web3 object (from web3.js lib)
  * @return {Object}
  */
-export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => { 
+export const getAirdropParams = async ({contractAddress, web3 }) => { 
     // get contract object at contractAddress
     const contract = web3.eth.contract(ABI).at(contractAddress);
     Promise.promisifyAll(contract, { suffix: '_Promise' });
@@ -30,6 +29,26 @@ export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => {
     // get claim amount (in atomic values) from the airdrop contract        
     let claimAmount = await contract.CLAIM_AMOUNT_Promise();
     claimAmount = claimAmount.shift(-1 * tokenDecimals).toNumber();
+    
+    return {
+        tokenSymbol,
+        claimAmount,
+        tokenAddress
+    };
+}
+
+
+/**
+ * @desc Check if link has been claimed before
+ * @param  {String}  [contractAddress] - Airdrop Contract address
+ * @param  {String}  [transitPK] - Transit Private key from the URL params
+ * @param  {Object}  [web3] - web3 object (from web3.js lib)
+ * @return {Boolean}
+ */
+export const isLinkClaimed = async ({contractAddress, transitPK, web3 }) => { 
+    // get contract object at contractAddress
+    const contract = web3.eth.contract(ABI).at(contractAddress);
+    Promise.promisifyAll(contract, { suffix: '_Promise' });
 
     // generate address from the transit private key
     const transitAddress = getAddressFromPrivateKey(transitPK);
@@ -37,10 +56,5 @@ export const getAirdropParams = async ({contractAddress, transitPK, web3 }) => {
     // is the link was already claimed (boolean)
     const linkClaimed = await contract.isLinkClaimed_Promise(transitAddress);
     
-    return {
-        tokenSymbol,
-        claimAmount,
-        tokenAddress,
-        linkClaimed 
-    }
+    return linkClaimed;
 }
