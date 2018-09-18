@@ -13,7 +13,7 @@ const _getApiHost = (networkId) => {
         serverUrl = 'https://mainnet-air.eth2phone.com';
         break;
     case '3':
-        serverUrl = 'https://ropsten-air.eth2phone.com';
+        serverUrl = 'http://ropsten-air.eth2phone.com:8009';
         break;     
     default:
         throw new Error("Unknown network!");

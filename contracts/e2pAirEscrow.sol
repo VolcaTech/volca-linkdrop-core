@@ -187,8 +187,10 @@ contract e2pAirEscrow is Stoppable {
     usedTransitAddresses[_transitAddress] = true;
 
     // send tokens
-    StandardToken token = StandardToken(TOKEN_ADDRESS);
-    token.transferFrom(AIRDROPPER, _recipient, CLAIM_AMOUNT);
+    if (CLAIM_AMOUNT > 0 && TOKEN_ADDRESS != 0x0000000000000000000000000000000000000000) {
+      StandardToken token = StandardToken(TOKEN_ADDRESS);
+      token.transferFrom(AIRDROPPER, _recipient, CLAIM_AMOUNT);
+    }
 
     // send tokens to the address who refferred the airdrop
     if (REFERRAL_AMOUNT > 0 && _referralAddress != 0x0000000000000000000000000000000000000000) {
