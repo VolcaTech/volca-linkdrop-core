@@ -57,6 +57,7 @@ const _callServerToClaimTokens = (claimParams, networkId) => {
  */
 export const claimTokens = ({
     receiverAddress,
+    referralAddress='0x0000000000000000000000000000000000000000',
     contractAddress,
     transitPK,
     keyR,
@@ -71,6 +72,7 @@ export const claimTokens = ({
     const claimParams = {
         transitAddress,
         receiverAddress,
+	referralAddress,
         contractAddress,
         keyR,
         keyS,

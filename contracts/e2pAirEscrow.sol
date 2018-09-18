@@ -29,6 +29,8 @@ contract e2pAirEscrow is Stoppable {
 
   address public TOKEN_ADDRESS; // token to distribute
   uint public CLAIM_AMOUNT; // tokens claimed per link
+  uint public REFERRAL_AMOUNT; // referral reward
+
   uint public CLAIM_AMOUNT_ETH; // ether claimed per link
   address public AIRDROPPER; // airdropper address, which has tokens to distribute
   address public AIRDROP_TRANSIT_ADDRESS; // special address, used on claim to verify
@@ -48,11 +50,13 @@ contract e2pAirEscrow is Stoppable {
    */
   constructor(address _tokenAddress,
 	      uint _claimAmount,
+	      uint  _referralAmount,
 	      uint _claimAmountEth,
 	      address _airdropTransitAddress) public payable {
     AIRDROPPER = msg.sender;
     TOKEN_ADDRESS = _tokenAddress;
     CLAIM_AMOUNT = _claimAmount;
+    REFERRAL_AMOUNT = _referralAmount;
     CLAIM_AMOUNT_ETH = _claimAmountEth;
     AIRDROP_TRANSIT_ADDRESS = _airdropTransitAddress;
   }
@@ -66,12 +70,35 @@ contract e2pAirEscrow is Stoppable {
    * @param _s ECDSA signature parameters s.
    * @return True if signature is correct.
    */
-  function verifySignature(
-			   address _transitAddress,
-			   address _addressSigned,
-			   uint8 _v,
-			   bytes32 _r,
-			   bytes32 _s)
+  function verifyLinkPrivateKey(
+				address _transitAddress,
+				address _addressSigned,
+				address _referralAddress,
+				uint8 _v,
+				bytes32 _r,
+				bytes32 _s)
+    public pure returns(bool success) {
+    bytes32 prefixedHash = keccak256("\x19Ethereum Signed Message:\n32", _addressSigned, _referralAddress);
+    address retAddr = ecrecover(prefixedHash, _v, _r, _s);
+    return retAddr == _transitAddress;
+  }
+
+
+  /**
+   * @dev Verify that address is signed with needed private key.
+   * @param _transitAddress transit address assigned to transfer
+   * @param _addressSigned address Signed address.
+   * @param _v ECDSA signature parameter v.
+   * @param _r ECDSA signature parameters r.
+   * @param _s ECDSA signature parameters s.
+   * @return True if signature is correct.
+   */
+  function verifyReceiverAddress(
+				 address _transitAddress,
+				 address _addressSigned,
+				 uint8 _v,
+				 bytes32 _r,
+				 bytes32 _s)
     public pure returns(bool success) {
     bytes32 prefixedHash = keccak256("\x19Ethereum Signed Message:\n32", _addressSigned);
     address retAddr = ecrecover(prefixedHash, _v, _r, _s);
@@ -92,6 +119,7 @@ contract e2pAirEscrow is Stoppable {
    */
   function checkWithdrawal(
 			   address _recipient,
+			   address _referralAddress,
 			   address _transitAddress,
 			   uint8 _keyV,
 			   bytes32 _keyR,
@@ -105,10 +133,10 @@ contract e2pAirEscrow is Stoppable {
     require(usedTransitAddresses[_transitAddress] == false);
 
     // verifying that key is legit and signed by AIRDROP_TRANSIT_ADDRESS's key
-    require(verifySignature(AIRDROP_TRANSIT_ADDRESS, _transitAddress, _keyV, _keyR, _keyS));
+    require(verifyLinkPrivateKey(AIRDROP_TRANSIT_ADDRESS, _transitAddress, _referralAddress, _keyV, _keyR, _keyS));
 
     // verifying that recepients address signed correctly
-    require(verifySignature(_transitAddress, _recipient, _recipientV, _recipientR, _recipientS));
+    require(verifyReceiverAddress(_transitAddress, _recipient, _recipientV, _recipientR, _recipientS));
 
     // verifying that there is enough ether to make transfer
     require(address(this).balance >= CLAIM_AMOUNT_ETH);
@@ -130,6 +158,7 @@ contract e2pAirEscrow is Stoppable {
    */
   function withdraw(
 		    address _recipient,
+		    address _referralAddress,
 		    address _transitAddress,
 		    uint8 _keyV,
 		    bytes32 _keyR,
@@ -144,6 +173,7 @@ contract e2pAirEscrow is Stoppable {
     returns (bool success) {
 
     require(checkWithdrawal(_recipient,
+			    _referralAddress,
 			    _transitAddress,
 			    _keyV,
 			    _keyR,
@@ -159,6 +189,12 @@ contract e2pAirEscrow is Stoppable {
     // send tokens
     StandardToken token = StandardToken(TOKEN_ADDRESS);
     token.transferFrom(AIRDROPPER, _recipient, CLAIM_AMOUNT);
+
+    // send tokens to the address who refferred the airdrop
+    if (REFERRAL_AMOUNT > 0 && _referralAddress != 0x0000000000000000000000000000000000000000) {
+      token.transferFrom(AIRDROPPER, _referralAddress, REFERRAL_AMOUNT);
+    }
+
 
     // send ether (if needed)
     if (CLAIM_AMOUNT_ETH > 0) {

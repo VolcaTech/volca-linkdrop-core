@@ -68,3 +68,19 @@ export const signAddress = ({address, privateKey}) => {
     const s = '0x' + signature.s.toString("hex");
     return { v, r, s };
 }
+
+
+/**
+ * @desc Sign Ethereum address with private key.
+ * @param  {String}  [privateKey]
+ * @param  {String}  [address] - Ethereum address
+ * @return {'v': Number, 'r': String, 's': String} 
+ */
+export const sign2Addresses = ({address, referralAddress, privateKey}) => {
+    const verificationHash = Web3Utils.soliditySha3(SIGNATURE_PREFIX, { type: 'address', value: address }, { type: 'address', value: referralAddress });  
+    const signature = _signWithPK(privateKey, verificationHash);
+    const v = signature.v;
+    const r = '0x' + signature.r.toString("hex");
+    const s = '0x' + signature.s.toString("hex");
+    return { v, r, s };
+}

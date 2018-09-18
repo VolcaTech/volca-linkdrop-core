@@ -4,7 +4,7 @@ import { approveContract } from './approveContract';
 import { generateLinks } from './generateLinks';
 
 // functions for claiming tokens
-import { getAirdropParams } from './getAirdropParams';
+import { getAirdropParams, isLinkClaimed } from './getAirdropParams';
 import { claimTokens } from './claimTokens';
 
 
@@ -14,6 +14,7 @@ export default {
     approveContract,
     generateLinks,
     getAirdropParams,
+    isLinkClaimed,
     claimTokens
 }
 
