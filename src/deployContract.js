@@ -95,7 +95,8 @@ export const deployContract = async ({
     };
     
     // tx params
-    const gasEstimate = await web3.eth.estimateGasPromise({data: BYTECODE});
+    //const gasEstimate = await web3.eth.estimateGasPromise({data: BYTECODE});
+    const gasEstimate = 1600000;
     const txGas = gasEstimate + 100000;
     const txValue = claimAmountEthInWei * linksNumber;
 
