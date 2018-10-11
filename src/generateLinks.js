@@ -9,7 +9,7 @@ const HOST = 'https://eth2air.io';
  * @param  {String}  [host] - Claim Link's server host, e.g. 'https://eth2air.io'  
  * @return {String}
  */
-const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddress }) => {
+const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddress, networkId }) => {
 
     // generate random key pair
     const { address, privateKey } = generateAccount();
@@ -24,6 +24,10 @@ const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddre
 	link = `${link}&ref=${referralAddress}`;
     }
     
+    if (String(networkId) === "3") {
+	link = `${link}&n=3`;
+    }
+    
     return link;
 }
 
@@ -36,11 +40,11 @@ const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddre
  * @param  {String}  [host] - Claim Link's server host, e.g. 'https://eth2air.io' 
  * @return {Array}
  */
-export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress, host=HOST, referralAddress='0x0000000000000000000000000000000000000000'}) => {
+export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress, host=HOST, referralAddress='0x0000000000000000000000000000000000000000', networkId="1"}) => {
     let i = 0;    
     const links = [];
     while (i < linksNumber) {     
-        const link = _constructLink({airdropTransitPK, contractAddress, host, referralAddress});
+        const link = _constructLink({airdropTransitPK, contractAddress, host, referralAddress, networkId});
         links.push([link]);
         i++;
     }
