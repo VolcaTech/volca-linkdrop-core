@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import { getToken, getAddressFromPrivateKey } from './utils';
-import { ABI } from './metadata';
+import { AIRDROP_ABI } from './metadata';
 
 /**
  * @desc Get Airdrop parameters from the Airdrop Smart Contract
@@ -10,7 +10,7 @@ import { ABI } from './metadata';
  */
 export const getAirdropParams = async ({contractAddress, web3 }) => { 
     // get contract object at contractAddress
-    const contract = web3.eth.contract(ABI).at(contractAddress);
+    const contract = web3.eth.contract(AIRDROP_ABI).at(contractAddress);
     Promise.promisifyAll(contract, { suffix: '_Promise' });
 
     // get token address form the airdrop contract
@@ -48,7 +48,6 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
 	tokenDecimals = 18;
 	referralAmount = 0;
     }
-
     
     return {
         tokenSymbol,
@@ -68,7 +67,7 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
  */
 export const isLinkClaimed = async ({contractAddress, transitPK, web3 }) => { 
     // get contract object at contractAddress
-    const contract = web3.eth.contract(ABI).at(contractAddress);
+    const contract = web3.eth.contract(AIRDROP_ABI).at(contractAddress);
     Promise.promisifyAll(contract, { suffix: '_Promise' });
 
     // generate address from the transit private key

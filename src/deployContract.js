@@ -1,4 +1,4 @@
-import { BYTECODE, ABI } from './metadata'; 
+import { AIRDROP_BYTECODE, AIRDROP_ABI } from './metadata'; 
 import { generateAccount } from './utils';
 
 
@@ -19,7 +19,7 @@ const _sendContractDeploymentTx = ({
     onTxMined
 }) => {    
     return new Promise((resolve, reject) => {
-        const AirdropContract = web3.eth.contract(ABI);    
+        const AirdropContract = web3.eth.contract(AIRDROP_ABI);    
         let {
 	    tokenAddress, claimAmountAtomic,
 	    claimAmountEthInWei, airdropTransitAddress,
@@ -29,7 +29,7 @@ const _sendContractDeploymentTx = ({
         AirdropContract.new(tokenAddress, claimAmountAtomic, referralAmountAtomic,
 			    claimAmountEthInWei, airdropTransitAddress, {
             from: web3.eth.accounts[0],
-            data: BYTECODE,
+            data: AIRDROP_BYTECODE,
             value: txValue,
             gas: txGas
         },  (err, airdropContract) => {
