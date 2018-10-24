@@ -1,11 +1,11 @@
-# Eth2Airdrop Core Javascript Library
+# Volcà Core Javascript Library
 
-Library for deploying and interacting with Eth2Airdrop Contract and Server APIs.  
-Used at Eth2Airdrop-app - https://github.com/Eth2io/eth2airdrop-app.git  
+Library for deploying and interacting with Volcà Airdrop Contract and Server APIs.  
+Used at Volca-Airdrop-App - https://github.com/VolcaTech/volca-airdrop-app 
 
 ## Installation
 ```bash
-npm i --save https://github.com/Eth2io/eth2airdrop-core.git
+npm i --save https://github.com/VolcaTech/volca-airdrop-core
 ```
 ## Usage
 
