@@ -5,7 +5,7 @@ import { generateLinks } from './generateLinks';
 
 // functions for claiming tokens
 import { getAirdropParams, isLinkClaimed } from './getAirdropParams';
-import { claimTokens } from './claimTokens';
+import { claimTokens, claimNFT } from './claimTokens';
 
 
 // library api
@@ -15,6 +15,7 @@ export default {
     generateLinks,
     getAirdropParams,
     isLinkClaimed,
-    claimTokens
+    claimTokens,
+    claimNFT
 }
 
