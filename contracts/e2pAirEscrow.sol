@@ -1,6 +1,6 @@
-import './SafeMath.sol';
-import './Stoppable.sol';
-import './StandardToken.sol';
+import './utilities/SafeMath.sol';
+import './utilities/Stoppable.sol';
+import './token/ERC20/ERC20.sol';
 
 
 /**
