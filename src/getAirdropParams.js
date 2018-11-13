@@ -1,6 +1,6 @@
 import Promise from 'bluebird';
 import { getToken, getAddressFromPrivateKey } from './utils';
-import { AIRDROP_ABI } from './metadata';
+import { AIRDROP_ABI, LINKDROP_NFT_ABI } from './metadata'; 
 
 /**
  * @desc Get Airdrop parameters from the Airdrop Smart Contract
@@ -75,6 +75,25 @@ export const isLinkClaimed = async ({contractAddress, transitPK, web3 }) => {
 
     // is the link was already claimed (boolean)
     const linkClaimed = await contract.isLinkClaimed_Promise(transitAddress);
+    
+    return linkClaimed;
+}
+
+
+/**
+ * @desc Check if NFT link has been claimed before
+ * @param  {String}  [contractAddress] - Airdrop Contract address
+ * @param  {String}  [tokenId] - NFT tokenID
+ * @param  {Object}  [web3] - web3 object (from web3.js lib)
+ * @return {Boolean}
+ */
+export const isLinkClaimedNFT = async ({contractAddress, tokenId, web3 }) => { 
+    // get contract object at contractAddress
+    const contract = web3.eth.contract(LINKDROP_NFT_ABI).at(contractAddress);
+    Promise.promisifyAll(contract, { suffix: '_Promise' });
+
+    // is the link was already claimed (boolean)
+    const linkClaimed = await contract.isLinkClaimed_Promise(tokenId);
     
     return linkClaimed;
 }
