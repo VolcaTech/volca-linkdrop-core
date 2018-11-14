@@ -8,7 +8,7 @@ import { deployNFTLinkdropContract } from './deployNFTLinkdropContract';
 import { approveNFTLinkdropContract } from './approveNFTLinkdropContract';
 
 // functions for claiming tokens
-import { getAirdropParams, isLinkClaimed } from './getAirdropParams';
+import { getAirdropParams, isLinkClaimed, isLinkClaimedNFT } from './getAirdropParams';
 import { claimTokens, claimNFT } from './claimTokens';
 
 
@@ -22,6 +22,7 @@ export default {
     claimTokens,
     claimNFT,
     deployNFTLinkdropContract,
-    approveNFTLinkdropContract
+    approveNFTLinkdropContract,
+    isLinkClaimedNFT
 }
 
