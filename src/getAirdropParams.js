@@ -17,43 +17,72 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
     const tokenAddress = await contract.TOKEN_ADDRESS_Promise();
     console.log({tokenAddress});
 
-    let tokenSymbol, claimAmount, tokenDecimals, referralAmount;
+    let tokenSymbol, claimAmount, tokenDecimals, referralAmount, isPaused, isStopped;
     
     if (tokenAddress !== '0x0000000000000000000000000000000000000000') { 
 
 	// for tokens
 	// get token object at token address
 	const token = getToken(tokenAddress, web3);
+	let result = await Promise.all([
+	    token.decimalsPromise(),
+	    token.symbolPromise(),
+	    contract.CLAIM_AMOUNT_Promise(),
+	    contract.REFERRAL_AMOUNT_Promise(),
+	    contract.paused_Promise(),
+	    contract.stopped_Promise()
+	]);
 
+	console.log({result});
+	
+	let [
+	    _tokenDecimals,	    
+	    _tokenSymbol,
+	    _claimAmount,
+	    _referralAmount,
+	    _isPaused,
+	    _isStopped
+	 ] = result;
+	
 	// get token decimals from the token contract
-	tokenDecimals = await token.decimalsPromise();
-	tokenDecimals = tokenDecimals.toNumber();
-
-	// get token symbol from the token contract    
-	tokenSymbol = await token.symbolPromise();
+	tokenDecimals = _tokenDecimals.toNumber();
 
 	// get claim amount (in atomic values) from the airdrop contract        
-	claimAmount = await contract.CLAIM_AMOUNT_Promise();
-	claimAmount = claimAmount.shift(-1 * tokenDecimals).toNumber();
+	claimAmount = _claimAmount.shift(-1 * _tokenDecimals).toNumber();
+	referralAmount = _referralAmount.shift(-1 * _tokenDecimals).toNumber();
 
-	referralAmount = await contract.REFERRAL_AMOUNT_Promise();
-	referralAmount = referralAmount.shift(-1 * tokenDecimals).toNumber();
-	
+	isStopped = _isStopped;
+	isPaused = _isPaused;
+	tokenSymbol = _tokenSymbol;
     } else {
 	// if only ether is sent
 	
 	tokenSymbol = 'ETH';
-	claimAmount = await contract.CLAIM_AMOUNT_ETH_Promise();
-	claimAmount = claimAmount.shift(-18).toNumber();
+	let [
+	    _claimAmount,
+	    _isPaused,
+	    _isStopped
+	] = await Promise.all([
+	    contract.CLAIM_AMOUNT_ETH_Promise(),
+	    contract.paused_Promise(),
+	    contract.stopped_Promise()
+	]);
+
+	claimAmount = _claimAmount.shift(-18).toNumber();
 	tokenDecimals = 18;
 	referralAmount = 0;
+
+	isStopped = _isStopped;
+	isPaused = _isPaused;
     }
     
     return {
         tokenSymbol,
         claimAmount,
         tokenAddress,
-	referralAmount
+	referralAmount,
+	isPaused,
+	isStopped
     };
 }
 
