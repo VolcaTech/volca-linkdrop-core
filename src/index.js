@@ -10,6 +10,7 @@ import { approveNFTLinkdropContract } from './approveNFTLinkdropContract';
 // functions for claiming tokens
 import { getAirdropParams, isLinkClaimed, isLinkClaimedNFT } from './getAirdropParams';
 import { claimTokens, claimNFT } from './claimTokens';
+import { getWithdrawalEvents } from './events';
 
 
 // library api
@@ -23,6 +24,7 @@ export default {
     claimNFT,
     deployNFTLinkdropContract,
     approveNFTLinkdropContract,
-    isLinkClaimedNFT
+    isLinkClaimedNFT,
+    getWithdrawalEvents
 }
 
