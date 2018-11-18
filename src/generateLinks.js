@@ -18,7 +18,6 @@ const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddre
     const { v, r, s } = sign2Addresses({address, referralAddress, privateKey: airdropTransitPK});
 
     // construct link
-    // construct link
     let link = `${host}/#/r?v=${v}&r=${r}&s=${s}&pk=${privateKey.toString('hex')}&c=${contractAddress}`;
     if (referralAddress !== '0x0000000000000000000000000000000000000000') {
 	link = `${link}&ref=${referralAddress}`;
@@ -28,7 +27,10 @@ const _constructLink = ({ airdropTransitPK, contractAddress, host, referralAddre
 	link = `${link}&n=3`;
     }
     
-    return link;
+    return {
+	link: link,
+	id: address.toLowerCase()
+    };
 }
 
 
@@ -45,8 +47,9 @@ export const generateLinks = ({linksNumber, airdropTransitPK, contractAddress, h
     const links = [];
     while (i < linksNumber) {     
         const link = _constructLink({airdropTransitPK, contractAddress, host, referralAddress, networkId});
-        links.push([link]);
+        links.push(link);
         i++;
     }
+
     return links;
 }

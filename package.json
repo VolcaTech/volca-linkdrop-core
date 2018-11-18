@@ -1,6 +1,6 @@
 {
   "name": "eth2air-core",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Core Javascript Eth2Air library",
   "main": "lib/eth2air-core.js",
   "scripts": {
