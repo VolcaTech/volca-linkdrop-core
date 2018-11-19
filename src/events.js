@@ -14,7 +14,7 @@ export const getWithdrawalEvents = async ({contractAddress, web3 }) => {
     
     return new Promise((resolve, reject) => {
 	console.log("Listening events");
-	contract.LogWithdraw(null, {fromBlock: 0, toBlock: 'latest'})
+	contract.LogWithdraw(null, {fromBlock: 6722292, toBlock: 'latest'})
 	    .get((error, result) => {
 		console.log({error, result});
 		if (error) { return resolve(error); }
