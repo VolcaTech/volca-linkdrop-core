@@ -15,7 +15,7 @@ contract NFTLinkdropContract is Stoppable {
                                                 // that links signed by the linkdropper
   
   event LogWithdraw(
-    address indexed transitAddress,
+    address indexed transitAddress, // link ID
     uint indexed tokenId,
     address receiver,
     uint timestamp
