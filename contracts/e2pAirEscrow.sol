@@ -37,6 +37,12 @@ contract e2pAirEscrow is Stoppable {
   // that links signed by the airdropper
 
 
+  event LogWithdraw(
+		    address transitAddress,
+		    address receiver,
+		        uint timestamp
+		    );
+
   // Mappings of transit address => true if link is used.
   mapping (address => bool) usedTransitAddresses;
 
@@ -203,6 +209,9 @@ contract e2pAirEscrow is Stoppable {
       _recipient.transfer(CLAIM_AMOUNT_ETH);
     }
 
+    // Log Withdrawal
+    emit LogWithdraw(_transitAddress, _recipient, now);
+
     return true;
   }
 
@@ -224,6 +233,7 @@ contract e2pAirEscrow is Stoppable {
     require(msg.sender == AIRDROPPER);
 
     AIRDROPPER.transfer(address(this).balance);
+
 
     return true;
   }
