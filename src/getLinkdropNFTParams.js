@@ -65,6 +65,7 @@ export const getNFTMetadata = async ({id, tokenAddress, web3}) => {
     let defaultMeta = {
 	description: "",
 	name: `NFT #${id}`,
+	externalUrl: '',
 	image:
 	"https://raw.githubusercontent.com/VolcaTech/eth2-assets/master/images/default_token.png"
     };
