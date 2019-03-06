@@ -3,7 +3,7 @@ const Wallet = require('ethereumjs-wallet');
 const Web3Utils = require('web3-utils');
 const util = require("ethereumjs-util");
 const erc20abi = require('human-standard-token-abi');
-
+import { NFT_ABI } from './metadata'; 
 const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
 
 
@@ -15,6 +15,19 @@ const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
  */
 export const getToken = (tokenAddress, web3) => {    
     const instance = web3.eth.contract(erc20abi).at(tokenAddress);
+    Promise.promisifyAll(instance, { suffix: 'Promise' });
+    return instance;
+};
+
+
+/**
+ * @desc Get token object from the contract address.
+ * @param  {String}  [tokenAddress] - token contract address
+ * @param  {Object}  [web3] - web3 object (from web3.js lib)
+ * @return {Object}
+ */
+export const getTokenNFT = (tokenAddress, web3) => {    
+    const instance = web3.eth.contract(NFT_ABI).at(tokenAddress);
     Promise.promisifyAll(instance, { suffix: 'Promise' });
     return instance;
 };

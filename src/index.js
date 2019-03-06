@@ -9,7 +9,7 @@ import { approveNFTLinkdropContract } from './approveNFTLinkdropContract';
 
 // functions for claiming tokens
 import { getAirdropParams, isLinkClaimed } from './getAirdropParams';
-import { getLinkdropParamsNFT } from './getLinkdropNFTParams';
+import { getLinkdropParamsNFT, getLinkdropNFTAddress, getNFTMetadata } from './getLinkdropNFTParams';
 import { claimTokens, claimNFT } from './claimTokens';
 import { getWithdrawalEvents, subscribeForWithdrawalEventsNFT, getWithdrawalEventsNFT } from './events';
 
@@ -28,6 +28,8 @@ export default {
     getWithdrawalEvents,
     getWithdrawalEventsNFT,
     subscribeForWithdrawalEventsNFT,
-    getLinkdropParamsNFT
+    getLinkdropParamsNFT,
+    getLinkdropNFTAddress,
+    getNFTMetadata
 }
 

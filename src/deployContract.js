@@ -25,7 +25,9 @@ const _sendContractDeploymentTx = ({
 	    claimAmountEthInWei, airdropTransitAddress,
 	    referralAmountAtomic
 	} = airdropParams;
-        
+
+	console.log(airdropParams);
+	
         AirdropContract.new(tokenAddress, claimAmountAtomic, referralAmountAtomic,
 			    claimAmountEthInWei, airdropTransitAddress, {
             from: web3.eth.accounts[0],
