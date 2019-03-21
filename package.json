@@ -1,8 +1,8 @@
 {
   "name": "volca-core",
   "version": "0.4.0",
-  "description": "Core Javascript Eth2Air library",
-  "main": "lib/eth2air-core.js",
+  "description": "Core Javascript Volca library",
+  "main": "lib/volca-core.js",
   "scripts": {
     "build": "webpack --env dev && webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
