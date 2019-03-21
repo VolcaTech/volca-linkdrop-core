@@ -1,6 +1,6 @@
 {
-  "name": "eth2air-core",
-  "version": "0.3.0",
+  "name": "volca-core",
+  "version": "0.4.0",
   "description": "Core Javascript Eth2Air library",
   "main": "lib/eth2air-core.js",
   "scripts": {
@@ -55,7 +55,6 @@
     "ethereumjs-tx": "^1.3.3",
     "ethereumjs-util": "^5.1.2",
     "ethereumjs-wallet": "^0.6.0",
-    "human-standard-token-abi": "^1.0.2",
     "idempotent-babel-polyfill": "^0.1.1",
     "querystring": "^0.2.0",
     "solidity-sha3": "^0.4.1",

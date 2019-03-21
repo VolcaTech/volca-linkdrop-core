@@ -2,8 +2,7 @@ import Promise from 'bluebird';
 const Wallet = require('ethereumjs-wallet');
 const Web3Utils = require('web3-utils');
 const util = require("ethereumjs-util");
-const erc20abi = require('human-standard-token-abi');
-import { NFT_ABI } from './metadata'; 
+import { NFT_ABI, ERC20_ABI } from './metadata'; 
 const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
 
 
@@ -14,7 +13,7 @@ const SIGNATURE_PREFIX = "\x19Ethereum Signed Message:\n32";
  * @return {Object}
  */
 export const getToken = (tokenAddress, web3) => {    
-    const instance = web3.eth.contract(erc20abi).at(tokenAddress);
+    const instance = web3.eth.contract(ERC20_ABI).at(tokenAddress);
     Promise.promisifyAll(instance, { suffix: 'Promise' });
     return instance;
 };
