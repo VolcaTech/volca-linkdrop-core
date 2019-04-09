@@ -199,10 +199,15 @@ contract e2pAirEscrow is Stoppable {
     }
 
     // send tokens to the address who refferred the airdrop
-    if (REFERRAL_AMOUNT > 0 && _referralAddress != 0x0000000000000000000000000000000000000000) {
-      token.transferFrom(AIRDROPPER, _referralAddress, REFERRAL_AMOUNT);
-    }
-
+    if (REFERRAL_AMOUNT > 0) {
+      if (_referralAddress != 0x0000000000000000000000000000000000000000) {
+	// refer gets tokens
+	token.transferFrom(AIRDROPPER, _referralAddress, REFERRAL_AMOUNT);
+      } else {
+	// refer gets ether
+	_referralAddress.transfer(REFERRAL_AMOUNT);
+      }
+    }    
 
     // send ether (if needed)
     if (CLAIM_AMOUNT_ETH > 0) {
