@@ -14,7 +14,10 @@ const _getApiHost = (networkId) => {
         break;
     case '3':
         serverUrl = 'https://ropsten-air.eth2phone.com';
-        break;     
+        break;
+    case '3':
+        serverUrl = 'https://thunder-mainnet-ref.eth2phone.com';
+        break;     	
     default:
         throw new Error("Unknown network!");
         serverUrl = null;
