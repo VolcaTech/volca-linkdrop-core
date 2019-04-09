@@ -60,6 +60,7 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
 	tokenSymbol = 'ETH';
 	let [
 	    _claimAmount,
+	    _referralAmount,
 	    _isPaused,
 	    _isStopped
 	] = await Promise.all([
@@ -70,7 +71,7 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
 
 	claimAmount = _claimAmount.shift(-18).toNumber();
 	tokenDecimals = 18;
-	referralAmount = 0;
+	referralAmount = _referralAmount.shift(-18).toNumber();
 
 	isStopped = _isStopped;
 	isPaused = _isPaused;
