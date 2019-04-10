@@ -15,7 +15,7 @@ const _getApiHost = (networkId) => {
     case '3':
         serverUrl = 'https://ropsten-air.eth2phone.com';
         break;
-    case '3':
+    case '108':
         serverUrl = 'https://thunder-mainnet-ref.eth2phone.com';
         break;     	
     default:
