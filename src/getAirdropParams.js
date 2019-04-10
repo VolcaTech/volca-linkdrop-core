@@ -65,6 +65,7 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
 	    _isStopped
 	] = await Promise.all([
 	    contract.CLAIM_AMOUNT_ETH_Promise(),
+	    contract.REFERRAL_AMOUNT_Promise(),
 	    contract.paused_Promise(),
 	    contract.stopped_Promise()
 	]);
