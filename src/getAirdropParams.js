@@ -57,7 +57,7 @@ export const getAirdropParams = async ({contractAddress, web3 }) => {
     } else {
 	// if only ether is sent
 	
-	tokenSymbol = 'ETH';
+	tokenSymbol = 'TT';
 	let [
 	    _claimAmount,
 	    _referralAmount,
